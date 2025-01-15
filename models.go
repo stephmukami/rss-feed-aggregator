@@ -11,6 +11,8 @@ type User struct {
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	Name      string `json:"name"`
+	APIKey      string `json:"api_key"`
+
 }
 
 func databaseToUser(user database.User) User{
@@ -19,6 +21,8 @@ func databaseToUser(user database.User) User{
 		CreatedAt: user.CreatedAt,
 		UpdatedAt: user.UpdatedAt,
 		Name :     user.Name,
-	}
+		APIKey :     user.ApiKey,
+
+ 	}
 }
 

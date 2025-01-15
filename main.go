@@ -59,6 +59,8 @@ v1Router := chi.NewRouter()
 v1Router.Get("/health-check",handlerReadiness)
 v1Router.Get("/err",handlerErr)
 v1Router.Post("/users",apiCfg.handlerCreateUser)
+v1Router.Get("/users",apiCfg.handlerUsersGet)
+
 //v1Router.Post("/users", apiCfg.handlerUsersCreate)
 
 //for api versioning
