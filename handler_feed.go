@@ -39,3 +39,16 @@ func (apiCfg *apiConfig) handlerFeedCreate(w http.ResponseWriter, r *http.Reques
 	}
 	respondWithJSON(w, http.StatusOK,databaseFeedToFeed(feed))
 }
+
+func (apiCfg *apiConfig) handlerGetFeeds(w http.ResponseWriter, r *http.Request){
+	feeds, err := apiCfg.DB.GetFeeds(r.Context())
+	
+	 if err!=nil{
+		respondWithError(w, http.StatusInternalServerError, "could not decode parameters")
+		return
+	}
+
+	
+	respondWithJSON(w, http.StatusOK,databaseFeedsToFeeds(feeds))
+}
+
