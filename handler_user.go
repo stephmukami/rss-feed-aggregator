@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"github.com/google/uuid"
 	"time"
-	"github.com/stephmukami/rss-feed-aggregator/internal/auth"
 
 	"github.com/stephmukami/rss-feed-aggregator/internal/database"
 )
@@ -42,21 +41,8 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 
 }
 
-func (apiCfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request){
-	apiKey, err := auth.GetAPIKey(r.Header)
+func (apiCfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request, user database.User){
 
-	if err !=nil{
-		respondWithError(w,http.StatusUnauthorized,"could not find API key")
-		return
-	}
-
-	user, err := apiCfg.DB.GetUserByAPIKey(r.Context(),apiKey)
-	if err !=nil{
-		respondWithError(w,400, fmt.Sprintf("could not get user: %v",err))
-		return
-	}
-
-	
 	respondWithJSON(w,200,databaseToUser(user))
 
 }
