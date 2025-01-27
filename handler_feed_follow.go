@@ -38,3 +38,21 @@ func (apiCfg *apiConfig) handlerFeedFollowCreate(w http.ResponseWriter, r *http.
 
 	respondWithJSON(w, http.StatusOK, databaseFeedFollowToFeedFollow(fedFollow))
 }
+
+func (apiCfg *apiConfig) handlerFeedFollowsGet(w http.ResponseWriter, r *http.Request, user database.User){
+	feedFollows, err := apiCfg.DB.GetFeedFollowsForUser(r.Context(),user.ID)
+	if err !=nil{
+		errorMessage := fmt.Sprintf("Couldn't create feed follow: %v", err)
+		respondWithError(w, http.StatusInternalServerError, errorMessage)
+
+		return
+	}
+	var result []FeedFollow
+	for _, feedFollow := range feedFollows {
+		result = append(result, databaseFeedFollowToFeedFollow(feedFollow))
+	}
+
+	respondWithJSON(w, http.StatusOK, result)
+
+
+}
